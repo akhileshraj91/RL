@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
-import tqdm
 import time
 
 
@@ -42,7 +41,7 @@ def execute_main(epsilon, c_val, oa, it):
     average_total_reward = np.zeros([iterations + 1, 1])
     average_reward_per_step = np.zeros([iterations, 1])
     for epo in range(epochs):
-        print(int((it + 1) / 3 * epo / epochs * 100), "%")
+        print(int((it*epochs+epo)/(epochs*3) * 100), "%")
         for rob in band:
             rob.initialize()
         total_reward = np.zeros([iterations + 1, 1])
@@ -84,22 +83,22 @@ def execute_main(epsilon, c_val, oa, it):
     plt.figure(1)
     plt.plot(average_reward, color=c_val, label='eps = % r' % round(epsilon, 2))
     plt.legend()
-    plt.show()
+    plt.draw()
 
     plt.figure(2)
     plt.plot(average_total_reward, color=c_val, label='eps = % r' % round(epsilon, 2))
     plt.legend()
-    plt.show()
+    plt.draw()
 
     plt.figure(3)
     plt.plot(average_reward_per_step, color=c_val, label='eps = % r' % round(epsilon, 2))
     plt.legend()
-    plt.show()
+    plt.draw()
 
     plt.figure(4)
     plt.scatter(range(len(percentage_optimal_action)),percentage_optimal_action, color=c_val, label='eps = % r' % round(epsilon, 2))
     plt.legend()
-    plt.show()
+    plt.draw()
 
 
 # if __name__ == "main":
@@ -115,7 +114,7 @@ for i in range(num_of_bandits):
     plt.figure(0)
     plt.scatter(i, q_star)
 plt.xlabel('Bandit arm')
-plt.show()
+plt.draw()
 iterations = 1000
 
 reward_per_step = np.zeros([iterations, 1])
@@ -124,3 +123,4 @@ color = ['k', 'g', 'r']
 epochs = 2000
 for i in range(3):
     execute_main(epsi_set[i], color[i], optimal_action, i)
+plt.show()
